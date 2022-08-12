@@ -29,6 +29,25 @@ class LinkedList {
         this.head = newHead;
     }
 
+    insertAt(value, index) {
+        let selected = this.at(index);
+        let selectedNext = selected.next;
+
+        let newNode = this.createNode(value);
+        newNode.next = selectedNext;
+        selected.next = newNode;
+        this.size++;
+    }
+
+    removeAt(index) {
+        let before = this.at(index - 1); // this is the index BEFORE the one you want to remove
+        if (!before) return;
+        let selected = before.next; // this is the node you want to remove
+        let selectedNext = selected.next; // this is the node's children, we want to keep this
+        before.next = selectedNext;
+        this.size--;
+    }
+
     contains(value) {
         let current = this.head;
         while (current.next != null) {
@@ -74,6 +93,7 @@ class LinkedList {
     }
 
     at(index) {
+        if (index > this.size - 1) return false;
         let current = this.head;
         if (index == 0) return current;
 
@@ -103,13 +123,16 @@ function createList() {
 
 let newLinkedList = createList();
 
+newLinkedList.prepend(12); // 0
 newLinkedList.append(6); // 1
 newLinkedList.append(13); // 2
 newLinkedList.append(5); // 3
 newLinkedList.append(4); // 4
 newLinkedList.append(124); // 5
-newLinkedList.prepend(12); // 0
-newLinkedList.pop();
 
-console.log(JSON.stringify(newLinkedList));
+console.log(newLinkedList.toString());
+
+newLinkedList.removeAt(6); // shouldn't do anything
+newLinkedList.removeAt(3); // should remove 5
+
 console.log(newLinkedList.toString());
