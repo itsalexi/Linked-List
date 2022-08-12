@@ -22,8 +22,49 @@ class LinkedList {
         return (current.next = this.createNode(value));
     }
 
+    prepend(value) {
+        let currentHead = this.head;
+        let newHead = this.createNode(value);
+        newHead.next = currentHead;
+        this.head = newHead;
+    }
+
+    contains(value) {
+        let current = this.head;
+        while (current.next != null) {
+            if (current.next.value == value) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    find(value) {
+        let index = 0;
+        for (let i = 0; i < this.size; i++) {
+            let current = this.at(index);
+            if (current.value == value) {
+                return index;
+            }
+            index++;
+        }
+        return null;
+    }
+
+    toString() {
+        let current = this.head;
+        let string = '';
+        while (current !== null) {
+            string += `(${current.value}) -> `;
+            current = current.next;
+        }
+        string += `(null)`;
+        return string;
+    }
+
     pop() {
-        let last = this.at(this.size - 2);
+        let last = this.at(this.size - 1);
         last.next = null;
         this.size--;
     }
@@ -43,7 +84,7 @@ class LinkedList {
     }
 
     traverse(head) {
-        let current = this.head;
+        let current = head;
         while (current.next !== null) {
             current = current.next;
         }
@@ -62,10 +103,13 @@ function createList() {
 
 let newLinkedList = createList();
 
-newLinkedList.append(6); // 0
-newLinkedList.append(13); // 1
-newLinkedList.append(5); // 2
-newLinkedList.append(12); // 3
-newLinkedList.append(124); // 4
+newLinkedList.append(6); // 1
+newLinkedList.append(13); // 2
+newLinkedList.append(5); // 3
+newLinkedList.append(4); // 4
+newLinkedList.append(124); // 5
+newLinkedList.prepend(12); // 0
 newLinkedList.pop();
+
 console.log(JSON.stringify(newLinkedList));
+console.log(newLinkedList.toString());
